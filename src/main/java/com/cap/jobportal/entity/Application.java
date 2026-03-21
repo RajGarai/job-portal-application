@@ -2,6 +2,8 @@ package com.cap.jobportal.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 
 @Entity
 public class Application {
@@ -10,8 +12,11 @@ public class Application {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "user_role")
+    @Column(name = "job_status")
     private ApplicationStatus status;
+
+    @Column(nullable = false)
+    private LocalDateTime appliedAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -51,5 +56,17 @@ public class Application {
 
     public void setJobPortal(JobPortal jobPortal) {
         this.jobPortal = jobPortal;
+    }
+
+    public void setStatus(ApplicationStatus status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getAppliedAt() {
+        return appliedAt;
+    }
+
+    public void setAppliedAt(LocalDateTime appliedAt) {
+        this.appliedAt = appliedAt;
     }
 }

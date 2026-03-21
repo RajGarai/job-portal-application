@@ -58,8 +58,8 @@ public class JobPortalController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<JobPortalDTO>>> getAllJobs() {
-        List<JobPortalDTO> jobs = jobPortalService.getAllJobs();
+    public ResponseEntity<ApiResponse<List<JobPortal>>> getAllJobs() {
+        List<JobPortal> jobs = jobPortalService.getAllJobs();
         return ResponseEntity.ok(
                 new ApiResponse<>(true, "All jobs fetched successfully", jobs)
         );

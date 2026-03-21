@@ -82,11 +82,8 @@ public class JobPortalService {
     }
 
 
-    public List<JobPortalDTO> getAllJobs() {
-        return jobPortalRepository.findAll()
-                .stream()
-                .map(job -> modelMapper.map(job, JobPortalDTO.class))
-                .collect(Collectors.toList());
+    public List<JobPortal> getAllJobs() {
+        return jobPortalRepository.findAll();
     }
 
 }
