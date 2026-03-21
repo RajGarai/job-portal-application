@@ -19,42 +19,47 @@ public class JobPortalController {
     @Autowired
     private JobPortalService jobPortalService;
 
-    // ✅ CREATE Job
+
     @PostMapping
-    public ResponseEntity<JobPortal> createJob(@RequestBody @Valid JobPortalDTO jobPortalDTO) {
+    public ResponseEntity<ApiResponse<JobPortal>> createJob(@RequestBody @Valid JobPortalDTO jobPortalDTO) {
+
         JobPortal createdJob = jobPortalService.createJob(jobPortalDTO);
-        return ResponseEntity.status(201).body(createdJob); // HTTP 201 CREATED
+        return ResponseEntity.status(201)
+                .body(new ApiResponse<>(true, "Job created successfully", createdJob));
     }
 
-    // ✅ UPDATE Job
     @PutMapping("/{id}")
-    public ResponseEntity<JobPortal> updateJob(
+    public ResponseEntity<ApiResponse<JobPortal>> updateJob(
             @PathVariable Long id,
             @RequestBody JobPortalDTO jobPortalDTO) {
 
         JobPortal updatedJob = jobPortalService.updateJob(jobPortalDTO, id);
-        return ResponseEntity.ok(updatedJob); // HTTP 200 OK
+        return ResponseEntity.ok(
+                new ApiResponse<>(true, "Job updated successfully", updatedJob)
+        );
     }
 
-    // ✅ DELETE Job
-    @DeleteMapping("/{id}/{userid}")
-    public ResponseEntity<String> deleteJob(@PathVariable Long id,@PathVariable Long UserId) {
-        jobPortalService.deleteJob(id,UserId);
-        return ResponseEntity.ok("Job deleted successfully");
+    @DeleteMapping("/{id}/{userId}")
+    public ResponseEntity<ApiResponse<String>> deleteJob(
+            @PathVariable Long id,
+            @PathVariable Long userId) {
+        jobPortalService.deleteJob(id, userId);
+        return ResponseEntity.ok(
+                new ApiResponse<>(true, "Job deleted successfully", null)
+        );
     }
 
-    // ✅ GET Job By ID
     @GetMapping("/{id}")
-    public ResponseEntity<JobPortal> getJobById(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<JobPortal>> getJobById(@PathVariable Long id) {
         JobPortal job = jobPortalService.getJobById(id);
-        return ResponseEntity.ok(job); // HTTP 200 OK
+        return ResponseEntity.ok(
+                new ApiResponse<>(true, "Job fetched successfully", job)
+        );
     }
 
     @GetMapping
     public ResponseEntity<ApiResponse<List<JobPortalDTO>>> getAllJobs() {
-
         List<JobPortalDTO> jobs = jobPortalService.getAllJobs();
-
         return ResponseEntity.ok(
                 new ApiResponse<>(true, "All jobs fetched successfully", jobs)
         );

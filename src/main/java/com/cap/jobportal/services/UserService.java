@@ -25,10 +25,9 @@ public class UserService {
         User user = new User();
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword()); // In production, hash the password
-        user.setRole(Role.valueOf(userDTO.getRole().toUpperCase())); // Set role from DTO
+        user.setPassword(userDTO.getPassword());
+        user.setRole(Role.valueOf(userDTO.getRole().toUpperCase()));
 
-        // Save and return the user
         return userRepository.save(user);
     }
 

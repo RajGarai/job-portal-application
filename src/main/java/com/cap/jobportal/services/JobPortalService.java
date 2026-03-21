@@ -5,6 +5,8 @@ import com.cap.jobportal.dto.UserDTO;
 import com.cap.jobportal.entity.JobPortal;
 import com.cap.jobportal.entity.Role;
 import com.cap.jobportal.entity.User;
+import com.cap.jobportal.exception.ResourceNotFoundException;
+import com.cap.jobportal.exception.UnauthorizedException;
 import com.cap.jobportal.repository.JobPortalRepository;
 import com.cap.jobportal.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -29,10 +31,10 @@ public class JobPortalService {
 
     private void checkAdmin(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found",userId));
 
-        if (user.getRole() != Role.ADMIN) {
-            throw new RuntimeException("Access Denied! Only ADMIN allowed");
+        if (user.getRole() != Role.RECRUITER) {
+            throw new UnauthorizedException("Access Denied! Only RECRUITER allowed");
         }
     }
 
@@ -64,7 +66,7 @@ public class JobPortalService {
 
     public void deleteJob(Long id, Long userId) {
 
-        checkAdmin(userId); // 🔥 AUTH CHECK
+        checkAdmin(userId);
 
         if (!jobPortalRepository.existsById(id)) {
             throw new RuntimeException("Job not found with id: " + id);

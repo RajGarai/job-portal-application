@@ -9,7 +9,9 @@ public class Application {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_role")
+    private ApplicationStatus status;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -27,12 +29,12 @@ public class Application {
         this.id = id;
     }
 
-    public String getStatus() {
+    public ApplicationStatus getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.status = ApplicationStatus.valueOf(status);
     }
 
     public User getUser() {

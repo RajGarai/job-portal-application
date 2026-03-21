@@ -1,6 +1,7 @@
 package com.cap.jobportal.entity;
 
 public enum Role {
-    USER,
+    JOB_SEEKER,
+    RECRUITER,
     ADMIN
 }
